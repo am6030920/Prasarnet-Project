@@ -1,0 +1,78 @@
+.todo-container {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+}
+
+.todo-content {
+  flex: 1;
+  padding: 40px;
+  font-family: futura, sans-serif;
+  font-size: 2.5vh;
+}
+
+.todo-card {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: 50vh;
+  border-radius: 2vh;
+  background: #fff;
+  padding: 20px;
+}
+
+.todo-title {
+  text-align: center;
+  padding-top: 3vh;
+}
+
+.todo-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.todo-input {
+  padding: 10px;
+  width: 300px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.date-time-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1vh;
+}
+
+.date-input,
+.time-input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #a165fa;
+  margin-right: 10px;
+  font-size: 16px;
+  width: 18vh;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2vh;
+}
+
+.save-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: rgb(27, 52, 196);
+  color: #fff;
+  font-size: 15px;
+  width: 12vh;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.save-btn:hover {
+  background: #0e497d;
+}

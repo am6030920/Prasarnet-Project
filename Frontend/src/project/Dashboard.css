@@ -1,0 +1,42 @@
+.dashboard-main {
+  flex: 1;
+  padding: 20px;
+  background: #f4f6f8;
+  overflow-y: auto;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-title {
+    color: rgb(27, 52, 196);
+  margin-bottom: 15px;
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.dashboard-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.shadow {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-value {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.dashboard-value.highlight {
+  color: #3c63ceff;
+}
+
+.dashboard-subject {
+  font-size: 20px;
+  font-weight: bold;
+}
