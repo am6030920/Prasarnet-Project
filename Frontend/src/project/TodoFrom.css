@@ -1,78 +1,96 @@
 .todo-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
-  font-family: Arial, sans-serif;
-  background: #f0f4f8;
+  background:white;
+  font-family: "Poppins", sans-serif;
 }
-
 .todo-content {
-  flex: 1;
-  padding: 40px;
-  font-family: futura, sans-serif;
-  font-size: 2.5vh;
-}
-
-.todo-card {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  height: 50vh;
-  border-radius: 2vh;
   background: #fff;
-  padding: 20px;
+  padding: 40px 45px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 420px;
 }
-
 .todo-title {
   text-align: center;
-  padding-top: 3vh;
+  font-size: 29px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 25px;
 }
-
 .todo-form {
   display: flex;
-  justify-content: center;
-  margin-top: 15px;
+  flex-direction: column;
+  gap: 18px;
 }
-
 .todo-input {
-  padding: 10px;
-  width: 300px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  outline: none;
 }
-
+.todo-input:focus {
+  border-color: #5c6bc0;
+  box-shadow: 0 0 5px rgba(92, 107, 192, 0.4);
+}
 .date-time-wrapper {
   display: flex;
-  justify-content: center;
-  margin-top: 1vh;
+  gap: 10px;
 }
-
 .date-input,
 .time-input {
+  flex: 1;
   padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #a165fa;
-  margin-right: 10px;
-  font-size: 16px;
-  width: 18vh;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  font-size: 14px;
+  transition: 0.3s;
+  outline: none;
 }
-
+.date-input:focus,
+.time-input:focus {
+  border-color: #5c6bc0;
+  box-shadow: 0 0 5px rgba(92, 107, 192, 0.4);
+}
+span {
+  color: red;
+  font-size: 13px;
+  margin-top: -10px;
+  margin-left: 2px;
+}
 .btn-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 2vh;
+  margin-top: 20px;
 }
-
 .save-btn {
-  padding: 10px 15px;
+  background-color: #5c6bc0;
+  color: white;
   border: none;
-  border-radius: 8px;
-  background: rgb(27, 52, 196);
-  color: #fff;
-  font-size: 15px;
-  width: 12vh;
+  padding: 10px 35px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: 0.3s ease;
 }
-
 .save-btn:hover {
-  background: #0e497d;
+  background-color: #3f51b5;
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(63, 81, 181, 0.3);
+}
+@media (max-width: 500px) {
+  .todo-content {
+    width: 95%;
+    padding: 25px;
+  }
+  .todo-title {
+    font-size: 20px;
+  }
 }
