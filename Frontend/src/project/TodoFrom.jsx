@@ -32,7 +32,7 @@ const TodoForm = () => {
           <h1 className="todo-title">Todo Form Office</h1>
 
         <form className="todo-form" onSubmit={handleSubmit}>
-            <input type="text" placeholder="Enter Your Meating Name..." className="todo-input" 
+            <input type="text" placeholder="Enter Meating Title..." className="todo-input" 
             value={Name}
             onChange={(e) => setName(e.target.value)}/>
               {nameError && (
@@ -42,11 +42,11 @@ const TodoForm = () => {
               )}
 
           <form className="todo-form">
-            <input type="text" placeholder="Enter Your Email..." className="todo-input" />
+            <input type="text" placeholder="Enter  Email..." className="todo-input" />
           </form>
 
           <form className="todo-form">
-            <input type="text" placeholder="Enter Your Password..." className="todo-input" />
+            <input type="text" placeholder="Enter HR Name..." className="todo-input" />
           </form>
 
           <div className="date-time-wrapper">
