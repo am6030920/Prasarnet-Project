@@ -1,14 +1,17 @@
 const UserSchema=require("../models/userModel");
 const bcrypt=require("bcrypt");
 
-const RegisterUser=async(req,res)=>{
+const registerUser=async(req,res)=>{
     const {name,email,phone,password}=req.body;
+    console.log(req.body
+
+    );
     try{
         const existingUser=await UserSchema.findOne({email:email});
         if(existingUser){
             return res.status(409).json({statusCode:409,message:"User account already exists with this email"});
         };
-        const encryptedPassword= bcrypt.hash(password,10);
+        const encryptedPassword=await bcrypt.hash(password,10);
         const newUser=new UserSchema({
             name:name,
             email:email,
@@ -25,4 +28,5 @@ const RegisterUser=async(req,res)=>{
 
     }
     
-}
+};
+module.exports={registerUser};

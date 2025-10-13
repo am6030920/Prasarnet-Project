@@ -13,6 +13,7 @@
   "type": "commonjs",
   "dependencies": {
     "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
     "body": "^5.1.0",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
@@ -20,8 +21,10 @@
     "express": "^5.1.0",
     "http": "^0.0.1-security",
     "mongoose": "^8.18.0",
-    "morgan": "^1.10.1",
-    "nodemon": "^3.1.10"
+    "morgan": "^1.10.1"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }
