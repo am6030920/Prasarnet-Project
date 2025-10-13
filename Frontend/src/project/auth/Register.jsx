@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link,Navigate,useNavigate } from "react-router-dom";
+import { Apis } from "../../apiList";
+import api from "../../apiConfig";
 
 const Register = () => {
   const navigation = useNavigate();
@@ -7,18 +9,14 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [confirmError, setConfirmError] = useState("");
 
   const validationForm = (e) => {
-    e.preventDefault();
     setNameError("");
     setEmailError("");
     setPasswordError("");
-    setConfirmError("");
     if (name.trim().length === 0) {
       setNameError("Please fill the Name");
       return;
@@ -48,23 +46,25 @@ const Register = () => {
       setPasswordError("Password must be 8 characters long");
       return;
     }
-    if (confirmPassword.trim().length === 0) {
-      setConfirmError("Please confirm your password");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setConfirmError("Passwords do not match");
-      return;
-    }
-
-    localStorage.setItem("userName", name);
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userpassword",password);
-    navigation("/dashboard");
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await validationForm();
+    const data = {name:name,email,password};
+    const response = await api.post(Apis.RegisterUser,data);
+    // console.log(JSON.stringify(response));
+
+    if(response && response?.data && response?.data?.statusCode === 200){
+      Navigate("/login");
+    }else{
+      window.alert(response?.data?.message)
+    };
+    
+
+  };
   return (
-    <form onSubmit={validationForm}>
+    <form >
       <div
         style={{
           display: "flex",
@@ -126,6 +126,7 @@ const Register = () => {
               <span style={{ color: "red", fontSize: "13px" }}>{emailError}</span>
             )}
             <p style={{ margin: "10px 4px", fontWeight: "bold" }}>Password</p>
+
             <input
               type="password"
               placeholder="Enter your password"
@@ -145,31 +146,9 @@ const Register = () => {
                 {passwordError}
               </span>
             )}
-            <p style={{ margin: "10px 4px", fontWeight: "bold" }}>
-              Confirm Password
-            </p>
-            <input
-              type="password"
-              placeholder="Re-enter your password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px",
-                borderRadius: "8px",
-                border: "1px solid #ccc",
-                outline: "none",
-                fontSize: "14px",
-              }}
-            />
-            {confirmError && (
-              <span style={{ color: "red", fontSize: "13px" }}>
-                {confirmError}
-              </span>
-            )}
           </div>
           <button
-            type="submit"
+            type="submit" onClick={(e) => handleSubmit(e)}
             style={{
               width: "100%",
               padding: "12px",
