@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Login = () => {
   const navigation = useNavigate();
   useEffect(()=>{
-  alert("welcome to my page")
+  alert("welcome❤️")
 },[])
 const handelLogin= () =>{
   navigation("/dashboard")
