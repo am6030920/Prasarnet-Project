@@ -1,11 +1,12 @@
 const UserSchema=require("../models/userModel");
 const bcrypt=require("bcrypt");
+const jwt=require("jsonwebtoken");
+const JWT_EXPRIER = process.env.JWT_EXPRIER;
+const JWT_SECRET  = process.env.JWT_SECRET ;
 
 const registerUser=async(req,res)=>{
     const {name,email,phone,password}=req.body;
-    console.log(req.body
-
-    );
+    console.log(req.body);
     try{
         const existingUser=await UserSchema.findOne({email:email});
         if(existingUser){
@@ -29,4 +30,23 @@ const registerUser=async(req,res)=>{
     }
     
 };
-module.exports={registerUser};
+const logIn =async (req,res)=>{
+  const {email,password}=req.body;
+    try{
+        const existingUser=await UserSchema.findOne({email:email})
+        if(!existingUser){
+            return res.status(400).json({statusCode:400,message:"user account not found"});
+        };
+        const isMatchedPassword=await bcrypt.compare(password,existingUser.password);
+        if(!isMatchedPassword){
+            return res.status(400).json({statusCode:400,message:"invalid password"});
+        };
+        existingUser.password=undefined;
+        const token = await jwt.sign({data:existingUser},JWT_SECRET,{expiresIn:JWT_EXPRIER});
+        return res.status(200).json({statusCode:200,message:"logIn sucessfull",token:`Bearer ${token}`});
+    }catch(error){
+        console.error("error in logIn user",error);
+        return res.status(500).json({statusCode:500,message:"enternal server error",error:error,message});
+    }
+}
+module.exports={registerUser,logIn};
