@@ -1,96 +1,104 @@
 .todo-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
-  background:white;
-  font-family: "Poppins", sans-serif;
+  padding: 40px 20px;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  min-height: 100vh;
 }
-.todo-content {
+
+.todo-card, .output-card {
   background: #fff;
-  padding: 40px 45px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  width: 90%;
-  max-width: 420px;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  width: 450px;
+  margin-bottom: 30px;
 }
+
 .todo-title {
   text-align: center;
-  font-size: 29px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 25px;
+  color: #0b29a0ff;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
+
 .todo-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
+
 .todo-input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1.5px solid #ccc;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
   font-size: 15px;
-  transition: all 0.3s ease;
-  outline: none;
 }
-.todo-input:focus {
-  border-color: #5c6bc0;
-  box-shadow: 0 0 5px rgba(92, 107, 192, 0.4);
-}
+
 .date-time-wrapper {
   display: flex;
+  justify-content: space-between;
   gap: 10px;
 }
-.date-input,
-.time-input {
-  flex: 1;
+
+.date-input, .time-input {
+  width: 100%;
   padding: 10px;
-  border-radius: 6px;
-  border: 1.5px solid #ccc;
-  font-size: 14px;
-  transition: 0.3s;
-  outline: none;
+  border-radius: 8px;
+  border: 1px solid #aaa;
 }
-.date-input:focus,
-.time-input:focus {
-  border-color: #5c6bc0;
-  box-shadow: 0 0 5px rgba(92, 107, 192, 0.4);
-}
-span {
-  color: red;
-  font-size: 13px;
-  margin-top: -10px;
-  margin-left: 2px;
-}
+
 .btn-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  text-align: center;
 }
+
 .save-btn {
-  background-color: #5c6bc0;
+  background: #3d5eca;
   color: white;
+  font-weight: bold;
+  padding: 10px 20px;
   border: none;
-  padding: 10px 35px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: 40vh;
   cursor: pointer;
-  transition: 0.3s ease;
+  width: 50%;
+  height: 50%;
 }
+
 .save-btn:hover {
-  background-color: #3f51b5;
-  transform: scale(1.03);
-  box-shadow: 0 4px 10px rgba(63, 81, 181, 0.3);
+  background: linear-gradient(90deg, #4a6cf7, #0b29a0ff);
+  font-size: 14px;
 }
-@media (max-width: 500px) {
-  .todo-content {
-    width: 95%;
-    padding: 25px;
-  }
-  .todo-title {
-    font-size: 20px;
-  }
+
+.output-card h2 {
+  text-align: center;
+  color: #0b29a0ff;
+  margin-bottom: 15px;
+}
+
+.meeting-item {
+  margin-bottom: 15px;
+}
+
+.meeting-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.meeting-buttons button {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.meeting-buttons button:first-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.meeting-buttons button:last-child {
+  background-color: #f44336;
+  color: white;
 }
