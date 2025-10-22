@@ -18,7 +18,8 @@ const Login = () => {
 
         if (response?.data?.statusCode === 200) {
           await localStorage.setItem("token",response?.data?.token||"");
-          navigate("./dsahboard")
+          // navigate("./dashboard")
+          window.location.reload();
         } else {
           window.alert(response?.data?.message);
 

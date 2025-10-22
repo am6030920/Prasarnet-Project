@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TodoFrom.css";
+import { Apis } from "../apiList";
+import api from "../apiConfig";
 
 const TodoForm = () => {
-  // Form states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [hrName, setHrName] = useState("");
@@ -12,9 +13,34 @@ const TodoForm = () => {
   const [time, setTime] = useState("");
   const [nameError, setNameError] = useState("");
 
-  // Meeting list
   const [meetings, setMeetings] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
+useEffect(() => {
+  // প্রথমে localStorage থেকে load
+  const saved = JSON.parse(localStorage.getItem("savedMeetings")) || [];
+  setMeetings(saved);
+
+  // তারপর backend fetch
+  const fetchMeetings = async () => {
+    try {
+      const res = await api.get(Apis.CreateMeeting);
+      const fetchedMeetings = res.data.meetings || res.data.meeting || [];
+      setMeetings(Array.isArray(fetchedMeetings) ? fetchedMeetings : saved);
+
+      // update localStorage
+      localStorage.setItem("savedMeetings", JSON.stringify(fetchedMeetings));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchMeetings();
+}, []);
+
+  // ✅ যখন meetings state update হবে, localStorage এও update করো
+  useEffect(() => {
+    localStorage.setItem("savedMeetings", JSON.stringify(meetings));
+  }, [meetings]);
 
   const resetForm = () => {
     setName("");
@@ -27,7 +53,7 @@ const TodoForm = () => {
     setEditingIndex(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setNameError("");
 
@@ -51,38 +77,55 @@ const TodoForm = () => {
       time,
     };
 
-    if (editingIndex !== null) {
-      // Update existing meeting
-      const updatedMeetings = [...meetings];
-      updatedMeetings[editingIndex] = meetingData;
-      setMeetings(updatedMeetings);
-      alert("Meeting updated successfully!");
-    } else {
-      // Add new meeting
-      setMeetings([...meetings, meetingData]);
-      alert("Meeting added successfully!");
+    try {
+      if (editingIndex !== null) {
+        const res = await api.put(
+          `${Apis.CreateMeeting}/${meetings[editingIndex]._id}`,
+          meetingData
+        );
+        const updatedMeetings = [...meetings];
+        updatedMeetings[editingIndex] = res.data.meeting || meetingData;
+        setMeetings(updatedMeetings);
+        alert("Meeting updated successfully!");
+      } else {
+        const res = await api.post(Apis.CreateMeeting, meetingData);
+        const newMeeting = res.data.meeting || meetingData;
+        setMeetings([...meetings, newMeeting]);
+        alert("Meeting added successfully!");
+      }
+      resetForm();
+    } catch (error) {
+      console.error("Error saving meeting:", error);
+      alert("Something went wrong while saving the meeting!");
     }
-
-    resetForm();
   };
 
   const handleEdit = (index) => {
     const meeting = meetings[index];
-    setName(meeting.name);
-    setEmail(meeting.email);
-    setHrName(meeting.hrName);
-    setLocation(meeting.location);
-    setMeetingType(meeting.meetingType);
-    setDate(meeting.date);
-    setTime(meeting.time);
+    if (!meeting) return;
+
+    setName(meeting.name || "");
+    setEmail(meeting.email || "");
+    setHrName(meeting.hrName || "");
+    setLocation(meeting.location || "");
+    setMeetingType(meeting.meetingType || "");
+    setDate(meeting.date || "");
+    setTime(meeting.time || "");
     setEditingIndex(index);
   };
 
-  const handleDelete = (index) => {
+  const handleDelete = async (index) => {
     const confirmDelete = window.confirm("Are you sure to delete this meeting?");
     if (confirmDelete) {
-      const updatedMeetings = meetings.filter((_, i) => i !== index);
-      setMeetings(updatedMeetings);
+      try {
+        await api.delete(`${Apis.CreateMeeting}/${meetings[index]._id}`);
+        const updatedMeetings = meetings.filter((_, i) => i !== index);
+        setMeetings(updatedMeetings);
+        alert("Meeting deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting meeting:", error);
+        alert("Failed to delete meeting.");
+      }
     }
   };
 
@@ -158,18 +201,34 @@ const TodoForm = () => {
           </div>
         </form>
       </div>
-      {meetings.length > 0 && (
+
+      {/* ✅ Meeting list */}
+      {Array.isArray(meetings) && meetings.length > 0 && (
         <div className="output-card">
           <h2>All Meetings</h2>
           {meetings.map((meeting, index) => (
             <div key={index} className="meeting-item">
-              <p><strong>Title:</strong> {meeting.name}</p>
-              <p><strong>Email:</strong> {meeting.email}</p>
-              <p><strong>HR:</strong> {meeting.hrName}</p>
-              <p><strong>Location:</strong> {meeting.location}</p>
-              <p><strong>Type:</strong> {meeting.meetingType}</p>
-              <p><strong>Date:</strong> {meeting.date}</p>
-              <p><strong>Time:</strong> {meeting.time}</p>
+              <p>
+                <strong>Title:</strong> {meeting.name || "N/A"}
+              </p>
+              <p>
+                <strong>Email:</strong> {meeting.email || "N/A"}
+              </p>
+              <p>
+                <strong>HR:</strong> {meeting.hrName || "N/A"}
+              </p>
+              <p>
+                <strong>Location:</strong> {meeting.location || "N/A"}
+              </p>
+              <p>
+                <strong>Type:</strong> {meeting.meetingType || "N/A"}
+              </p>
+              <p>
+                <strong>Date:</strong> {meeting.date || "N/A"}
+              </p>
+              <p>
+                <strong>Time:</strong> {meeting.time || "N/A"}
+              </p>
               <div className="meeting-buttons">
                 <button onClick={() => handleEdit(index)}>Update</button>
                 <button onClick={() => handleDelete(index)}>Delete</button>

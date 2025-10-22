@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import "./Profile.css"
 
 const Profile = () => {
-  const [name, setName]=useState("Akash maity");
-  const [Email , setEmail]= useState("am6030920@gmail.com");
-  const [phone, setPhone] =useState("+91 983103680");
+  const [name, setName]=useState("Guest");
+  const [Email , setEmail]= useState("example@gmail.com");
+  const [phone, setPhone] =useState("+91 000-0000-00");
 
   const [isEditing, setIsEditing] = useState(false);
   const handleSave = () => {
@@ -26,6 +26,7 @@ const Profile = () => {
                 <input 
                   type="text" 
                   value={name} 
+                  placeholder='Enter name'
                   onChange={(e) => setName(e.target.value)} 
                   className="edit-input"
                 />

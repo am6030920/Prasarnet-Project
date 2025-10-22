@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+ import React, { useEffect } from "react";
 import { useLocation, Link,useNavigate } from "react-router-dom";
 import "./SideBar.css";
 
@@ -11,7 +11,10 @@ const Sidebar = ({ setHeaderName }) => {
   };
   const handleLogOut = () =>
   {
-    navigation("/Login");
+    if (window.confirm("Are you sure you want to logout?")) {
+    localStorage.removeItem("token");
+    window.location.reload();
+    }
   }
 
   return (

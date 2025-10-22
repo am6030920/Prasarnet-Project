@@ -7,10 +7,14 @@ import Sidebar from './project/component/common/Sidebar';
 
 function App() {
 const [headerName, setHeaderName]=useState("");
+const token = localStorage.getItem("token");
+
 
   return (
     <>
       <BrowserRouter>
+      {token ?
+      (<>
         <div style={{ display: "flex", flexDirection: "row", background: "#f0f4f8"}}>
           <Sidebar setHeaderName={setHeaderName}/>
           <div style={{ display: "flex",width:"85vw",flexDirection: "column"}}>
@@ -18,6 +22,9 @@ const [headerName, setHeaderName]=useState("");
             <AppRoutes />
           </div>  
         </div>
+      </>):(
+        <AppRoutes />
+      )}
       </BrowserRouter>
     </>
   );

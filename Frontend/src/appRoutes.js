@@ -9,17 +9,18 @@ import TodoFrom from './project/TodoFrom';
 
 
 const AppRoutes = () => {
+  const token = localStorage.getItem("token");
 
   return (
       <Routes >
-            <Route path='/' element={<Login/>}/>
-            <Route path='/login' element={<Login/>}/> 
-             <Route path='/register' element={<Register/>}/>   
-             <Route path='/dashboard' element={<DsahBoard />}/>
-            <Route path='/Profile' element={<Profile/>}/>
-            <Route path="/TodoList" element={<TodoList />}/>
+            <Route path='/' element={token ?<Navigate to="/dashboard" />: <Navigate to="/login" /> }/>
+            <Route path='/login' element={token ? <Navigate to="/dashboard" />:<Login/>}/> 
+             <Route path='/register' element={token ? <Navigate to="/dashboard" />:<Register/> }/>   
+             <Route path='/dashboard' element={token ? <DsahBoard/> : <Navigate to="/login" /> }/>
+            <Route path='/Profile' element={token ? <Profile/> : <Navigate to="/login" /> }/>
+            <Route path="/TodoList" element={token ? <TodoList /> : <Navigate to="/login" /> }/>
 
-            <Route path="/todoFrom" element={<TodoFrom />}/>
+            <Route path="/todoFrom" element={token ? <TodoFrom /> : <Navigate to="/login" /> }/>
       </Routes>
   )
 };
